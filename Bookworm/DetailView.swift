@@ -36,8 +36,13 @@ struct DetailView: View {
                     .font(.title)
                     .foregroundColor(.secondary)
 
+                Text(self.book.date?.shortString ?? Date().shortString)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                
                 Text(self.book.review ?? "No review")
                     .padding()
+                
 
                 RatingView(rating: .constant(Int(self.book.rating)))
                     .font(.largeTitle)
@@ -59,6 +64,16 @@ struct DetailView: View {
     func deleteBook() {
         moc.delete(book)
         presentationMode.wrappedValue.dismiss()
+    }
+}
+
+extension Date {
+    var shortString: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        let string = formatter.string(from: self)
+        return string
     }
 }
 
